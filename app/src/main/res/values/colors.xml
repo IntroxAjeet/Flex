@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="blue">#FF0000FF</color>
+
+        <!-- FAB Colors -->
+        <color name="colorFAB">#212121</color>  <!-- Dark Grey -->
+        <color name="colorFABPressed">#424242</color>  <!-- Light Grey -->
+        <color name="colorFABIcon">#FFFFFF</color>  <!-- White Icon -->
+
+        <!-- Transparent Shadow -->
+        <color name="colorShadow">#66000000</color>  <!-- Semi-transparent Black -->
+
+    <color name="colorBorder">#1E293B</color> <!-- Darker Border -->
+
+
+</resources>

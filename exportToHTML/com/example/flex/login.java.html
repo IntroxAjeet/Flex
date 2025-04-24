@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>login.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+login.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">flex</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Intent</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">SharedPreferences</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Log</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Button</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">EditText</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">TextView</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Toast</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">activity</span><span class="s2">.</span><span class="s1">EdgeToEdge</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">NonNull</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">auth</span><span class="s2">.</span><span class="s1">FirebaseAuth</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">auth</span><span class="s2">.</span><span class="s1">FirebaseUser</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">login </span><span class="s0">extends </span><span class="s1">AppCompatActivity </span><span class="s2">{</span>
+
+    <span class="s0">private </span><span class="s1">Button login</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">EditText username</span><span class="s2">, </span><span class="s1">password</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">TextView create_account</span><span class="s2">;</span>
+
+    <span class="s0">private </span><span class="s1">FirebaseAuth mAuth </span><span class="s2">= </span><span class="s1">FirebaseAuth</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">();</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">Bundle savedInstanceState</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">);</span>
+        <span class="s1">EdgeToEdge</span><span class="s2">.</span><span class="s1">enable</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.</span><span class="s1">activity_login</span><span class="s2">);</span>
+
+        <span class="s1">login </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">login_button</span><span class="s2">);</span>
+        <span class="s1">username </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">user_name</span><span class="s2">);</span>
+        <span class="s1">password </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">password</span><span class="s2">);</span>
+        <span class="s1">create_account </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">create_account</span><span class="s2">);</span>
+
+        <span class="s1">create_account</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">login</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">user_Registration</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s1">loginUser</span><span class="s2">();</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onStart</span><span class="s2">();</span>
+        <span class="s1">FirebaseUser user </span><span class="s2">= </span><span class="s1">mAuth</span><span class="s2">.</span><span class="s1">getCurrentUser</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">user </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s3">// User already logged in, directly go to home screen</span>
+            <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+            <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+            <span class="s1">finish</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">loginUser</span><span class="s2">() {</span>
+        <span class="s1">String user_name </span><span class="s2">= </span><span class="s1">username</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">().</span><span class="s1">toString</span><span class="s2">().</span><span class="s1">trim</span><span class="s2">();</span>
+        <span class="s1">String pass </span><span class="s2">= </span><span class="s1">password</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">().</span><span class="s1">toString</span><span class="s2">().</span><span class="s1">trim</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">user_name</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">() || </span><span class="s1">pass</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+            <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">login</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s4">&quot;Please fill all the fields&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s1">mAuth</span><span class="s2">.</span><span class="s1">signInWithEmailAndPassword</span><span class="s2">(</span><span class="s1">user_name</span><span class="s2">,</span><span class="s1">pass</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">addOnCompleteListener</span><span class="s2">(</span><span class="s1">task -&gt; </span><span class="s2">{</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">task</span><span class="s2">.</span><span class="s1">isSuccessful</span><span class="s2">()) {</span>
+                        <span class="s1">FirebaseUser user </span><span class="s2">= </span><span class="s1">mAuth</span><span class="s2">.</span><span class="s1">getCurrentUser</span><span class="s2">();</span>
+                        <span class="s0">if </span><span class="s2">(</span><span class="s1">user </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                            <span class="s1">Log</span><span class="s2">.</span><span class="s1">d</span><span class="s2">(</span><span class="s4">&quot;JUJU&quot;</span><span class="s2">, </span><span class="s4">&quot;Log in Successful&quot; </span><span class="s2">+ </span><span class="s1">user</span><span class="s2">.</span><span class="s1">getUid</span><span class="s2">());</span>
+                            <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">login</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                            <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+                            <span class="s1">finish</span><span class="s2">();</span>
+                        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                            <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s4">&quot;JUJU&quot;</span><span class="s2">, </span><span class="s4">&quot;Login Failed&quot;</span><span class="s2">, </span><span class="s1">task</span><span class="s2">.</span><span class="s1">getException</span><span class="s2">());</span>
+                        <span class="s2">}</span>
+                    <span class="s2">}</span>
+                <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">saveLoginData</span><span class="s2">(</span><span class="s1">String user_name </span><span class="s2">, </span><span class="s1">String pass</span><span class="s2">) {</span>
+        <span class="s1">SharedPreferences sharedPreferences </span><span class="s2">= </span><span class="s1">getSharedPreferences</span><span class="s2">(</span><span class="s4">&quot;LoginPrefs&quot;</span><span class="s2">, </span><span class="s1">MODE_PRIVATE</span><span class="s2">);</span>
+        <span class="s1">SharedPreferences</span><span class="s2">.</span><span class="s1">Editor editor </span><span class="s2">= </span><span class="s1">sharedPreferences</span><span class="s2">.</span><span class="s1">edit</span><span class="s2">();</span>
+        <span class="s1">editor</span><span class="s2">.</span><span class="s1">putString</span><span class="s2">(</span><span class="s4">&quot;username&quot;</span><span class="s2">, </span><span class="s1">user_name</span><span class="s2">);</span>
+        <span class="s1">editor</span><span class="s2">.</span><span class="s1">putString</span><span class="s2">(</span><span class="s4">&quot;password&quot;</span><span class="s2">, </span><span class="s1">pass</span><span class="s2">);</span>
+        <span class="s1">editor</span><span class="s2">.</span><span class="s1">apply</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">checkLogin</span><span class="s2">(</span><span class="s1">@NonNull String user_name</span><span class="s2">, </span><span class="s1">String pass</span><span class="s2">) {</span>
+        <span class="s1">SharedPreferences sharedPreferences </span><span class="s2">= </span><span class="s1">getSharedPreferences</span><span class="s2">(</span><span class="s4">&quot;LoginPrefs&quot;</span><span class="s2">, </span><span class="s1">MODE_PRIVATE</span><span class="s2">);</span>
+        <span class="s1">String savedUsername </span><span class="s2">= </span><span class="s1">sharedPreferences</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;username&quot;</span><span class="s2">, </span><span class="s4">&quot;&quot;</span><span class="s2">);</span>
+        <span class="s1">String savedPassword </span><span class="s2">= </span><span class="s1">sharedPreferences</span><span class="s2">.</span><span class="s1">getString</span><span class="s2">(</span><span class="s4">&quot;password&quot;</span><span class="s2">, </span><span class="s4">&quot;&quot;</span><span class="s2">);</span>
+        <span class="s1">username</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">savedUsername</span><span class="s2">);</span>
+        <span class="s1">password</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">savedPassword</span><span class="s2">);</span>
+
+        <span class="s0">return </span><span class="s1">user_name</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">savedUsername</span><span class="s2">) &amp;&amp; </span><span class="s1">pass</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">savedPassword</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">checkAutoLogin</span><span class="s2">() {</span>
+        <span class="s1">SharedPreferences sharedPreferences </span><span class="s2">= </span><span class="s1">getSharedPreferences</span><span class="s2">(</span><span class="s4">&quot;LoginPrefs&quot;</span><span class="s2">, </span><span class="s1">MODE_PRIVATE</span><span class="s2">);</span>
+        <span class="s0">boolean </span><span class="s1">isLoggedIn </span><span class="s2">= </span><span class="s1">sharedPreferences</span><span class="s2">.</span><span class="s1">getBoolean</span><span class="s2">(</span><span class="s4">&quot;isLoggedIn&quot;</span><span class="s2">, </span><span class="s0">false</span><span class="s2">);</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">isLoggedIn</span><span class="s2">) {</span>
+            <span class="s3">// User logged in hai, direct main activity par bhej do</span>
+            <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">login</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+            <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+            <span class="s1">finish</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span></pre>
+</body>
+</html>

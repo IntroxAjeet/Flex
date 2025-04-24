@@ -1,0 +1,723 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">flex</span><span class="s2">;</span>
+
+<span class="s0">import static </span><span class="s1">android</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">PendingIntent</span><span class="s2">.</span><span class="s1">getActivity</span><span class="s2">;</span>
+<span class="s0">import static </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">animation</span><span class="s2">.</span><span class="s1">AnimationUtils</span><span class="s2">.</span><span class="s1">loadAnimation</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">Manifest</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Intent</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">IntentSender</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">pm</span><span class="s2">.</span><span class="s1">PackageManager</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">Location</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">net</span><span class="s2">.</span><span class="s1">Uri</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Build</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Handler</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Looper</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">provider</span><span class="s2">.</span><span class="s1">Settings</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Log</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">Menu</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">MenuInflater</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">MenuItem</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">animation</span><span class="s2">.</span><span class="s1">Animation</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">ImageView</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Toast</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">activity</span><span class="s2">.</span><span class="s1">EdgeToEdge</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">NonNull</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AlertDialog</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Toolbar</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">ActivityCompat</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">ContextCompat</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">fragment</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">Fragment</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">recyclerview</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">LinearLayoutManager</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">recyclerview</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">RecyclerView</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">common</span><span class="s2">.</span><span class="s1">api</span><span class="s2">.</span><span class="s1">ResolvableApiException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">FusedLocationProviderClient</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationCallback</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationRequest</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationResult</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationServices</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationSettingsRequest</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">LocationSettingsResponse</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">location</span><span class="s2">.</span><span class="s1">SettingsClient</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">CameraUpdateFactory</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">GoogleMap</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">OnMapReadyCallback</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">SupportMapFragment</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">LatLng</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Marker</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">maps</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">MarkerOptions</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">tasks</span><span class="s2">.</span><span class="s1">OnSuccessListener</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">gms</span><span class="s2">.</span><span class="s1">tasks</span><span class="s2">.</span><span class="s1">Task</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">material</span><span class="s2">.</span><span class="s1">bottomnavigation</span><span class="s2">.</span><span class="s1">BottomNavigationView</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">material</span><span class="s2">.</span><span class="s1">floatingactionbutton</span><span class="s2">.</span><span class="s1">FloatingActionButton</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">material</span><span class="s2">.</span><span class="s1">navigation</span><span class="s2">.</span><span class="s1">NavigationBarView</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">auth</span><span class="s2">.</span><span class="s1">FirebaseAuth</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">DataSnapshot</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">DatabaseError</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">DatabaseReference</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">FirebaseDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">firebase</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">ValueEventListener</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">HashMap</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Map</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity </span><span class="s0">implements </span><span class="s1">OnMapReadyCallback </span><span class="s2">{</span>
+
+    <span class="s0">private static final int </span><span class="s1">REQUEST_CHECK_SETTINGS </span><span class="s2">= </span><span class="s3">1001</span><span class="s2">;</span>
+    <span class="s0">public static </span><span class="s1">GoogleMap mMap</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">FloatingActionButton fab</span><span class="s2">,</span><span class="s1">fab1</span><span class="s2">,</span><span class="s1">fab2</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">Handler handler</span><span class="s2">;</span>
+    <span class="s0">private long </span><span class="s1">refreshTime </span><span class="s2">= </span><span class="s3">5000</span><span class="s2">;</span>
+    <span class="s1">Runnable runnable</span><span class="s2">;</span>
+
+
+    <span class="s0">private </span><span class="s1">FirebaseAuth mAuth</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseDatabase database</span><span class="s2">=</span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">();</span>
+    <span class="s0">private </span><span class="s1">DatabaseReference databaseReference</span><span class="s2">,</span><span class="s1">LongitudeRef</span><span class="s2">,</span><span class="s1">LatitudeRef</span><span class="s2">;</span>
+
+
+    <span class="s0">private final int </span><span class="s1">FINE_LOCATION_PERMISSION_REQUEST_CODE </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+    <span class="s0">private final int </span><span class="s1">NOTIFICATION_PERMISSION_REQUEST_CODE </span><span class="s2">= </span><span class="s3">2</span><span class="s2">;</span>
+    <span class="s0">private final int </span><span class="s1">BACKGROUND_LOCATION_PERMISSION_REQUEST_CODE </span><span class="s2">= </span><span class="s3">3</span><span class="s2">;</span>
+
+    <span class="s1">FusedLocationProviderClient fusedLocationProviderClient</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">LocationCallback locationCallback</span><span class="s2">;</span>
+    <span class="s1">Location currentLocation</span><span class="s2">, </span><span class="s1">Database_Location</span><span class="s2">;</span>
+
+    <span class="s0">private </span><span class="s1">Animation fabOpen</span><span class="s2">, </span><span class="s1">fabClose</span><span class="s2">;</span>
+    <span class="s0">private boolean </span><span class="s1">isFabOpen </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+
+    <span class="s0">private </span><span class="s1">RecyclerView userRecyclerView</span><span class="s2">;</span>
+    <span class="s0">public static </span><span class="s1">UserAdapter userAdapter</span><span class="s2">;</span>
+    <span class="s0">public static </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">User</span><span class="s2">&gt; </span><span class="s1">userList </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Marker</span><span class="s2">&gt; </span><span class="s1">markerMap </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HashMap</span><span class="s2">&lt;&gt;();</span>
+
+    <span class="s1">Double lon </span><span class="s2">= </span><span class="s3">0.0</span><span class="s2">;</span>
+    <span class="s1">Double lat </span><span class="s2">= </span><span class="s3">0.0</span><span class="s2">;</span>
+<span class="s4">//    String userID = mAuth.getCurrentUser().getUid();</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">Bundle savedInstanceState</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">);</span>
+        <span class="s1">EdgeToEdge</span><span class="s2">.</span><span class="s1">enable</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.</span><span class="s1">activity_main</span><span class="s2">);</span>
+
+        <span class="s1">BottomNavigationView bottomNavigationView </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">bottom_navigation</span><span class="s2">);</span>
+<span class="s4">//        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new profile()).commit();</span>
+        <span class="s1">Fragment selectedFragment </span><span class="s2">= </span><span class="s1">getSupportFragmentManager</span><span class="s2">().</span><span class="s1">findFragmentById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">frame_layout</span><span class="s2">);</span>
+        <span class="s1">bottomNavigationView</span><span class="s2">.</span><span class="s1">setOnItemSelectedListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">NavigationBarView</span><span class="s2">.</span><span class="s1">OnItemSelectedListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public boolean </span><span class="s1">onNavigationItemSelected</span><span class="s2">(</span><span class="s1">@NonNull MenuItem item</span><span class="s2">) {</span>
+                <span class="s1">Fragment selectedFragment </span><span class="s2">= </span><span class="s0">null</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">item</span><span class="s2">.</span><span class="s1">getItemId</span><span class="s2">() == </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">nav_home</span><span class="s2">) {</span>
+<span class="s4">//                    findViewById(R.id.frame_layout).setVisibility(View.GONE);</span>
+<span class="s4">//                    findViewById(R.id.fragment).setVisibility(View.VISIBLE);</span>
+                    <span class="s1">getSupportFragmentManager</span><span class="s2">().</span><span class="s1">beginTransaction</span><span class="s2">().</span><span class="s1">replace</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">frame_layout</span><span class="s2">, </span><span class="s0">new </span><span class="s1">homeFragment</span><span class="s2">()).</span><span class="s1">commit</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">item</span><span class="s2">.</span><span class="s1">getItemId</span><span class="s2">() == </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">nav_user</span><span class="s2">) {</span>
+                    <span class="s1">getSupportFragmentManager</span><span class="s2">().</span><span class="s1">beginTransaction</span><span class="s2">().</span><span class="s1">replace</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">frame_layout</span><span class="s2">, </span><span class="s0">new </span><span class="s1">UserFragment</span><span class="s2">()).</span><span class="s1">commit</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">item</span><span class="s2">.</span><span class="s1">getItemId</span><span class="s2">() == </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">nav_profile</span><span class="s2">) {</span>
+                    <span class="s1">getSupportFragmentManager</span><span class="s2">().</span><span class="s1">beginTransaction</span><span class="s2">().</span><span class="s1">replace</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">frame_layout</span><span class="s2">, </span><span class="s0">new </span><span class="s1">profile</span><span class="s2">()).</span><span class="s1">commit</span><span class="s2">();</span>
+<span class="s4">//                    findViewById(R.id.frame_layout).setVisibility(View.VISIBLE);</span>
+<span class="s4">//                    findViewById(R.id.fragment).setVisibility(View.GONE);</span>
+                <span class="s2">}</span>
+                <span class="s0">return true</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s4">//toolbar Section</span>
+        <span class="s1">Toolbar toolbar </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">toolbar</span><span class="s2">);</span>
+        <span class="s1">setSupportActionBar</span><span class="s2">(</span><span class="s1">toolbar</span><span class="s2">);</span>
+        <span class="s1">getSupportActionBar</span><span class="s2">().</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s5">&quot;IntroxMap&quot;</span><span class="s2">);</span>
+        <span class="s1">getSupportActionBar</span><span class="s2">().</span><span class="s1">setDisplayHomeAsUpEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">toolbar</span><span class="s2">.</span><span class="s1">setNavigationIcon</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">drawable</span><span class="s2">.</span><span class="s1">baseline_density_medium_24</span><span class="s2">);</span>
+        <span class="s1">toolbar</span><span class="s2">.</span><span class="s1">setNavigationOnClickListener</span><span class="s2">(</span><span class="s1">v -&gt;</span>
+                <span class="s1">toggleList</span><span class="s2">());</span>
+        <span class="s1">toolbar</span><span class="s2">.</span><span class="s1">setNavigationContentDescription</span><span class="s2">(</span><span class="s5">&quot;Toggle List&quot;</span><span class="s2">);</span>
+
+        <span class="s1">mAuth </span><span class="s2">= </span><span class="s1">FirebaseAuth</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">();</span>
+
+        <span class="s1">checkLocationSettings</span><span class="s2">();</span>
+
+        <span class="s1">fusedLocationProviderClient </span><span class="s2">= </span><span class="s1">LocationServices</span><span class="s2">.</span><span class="s1">getFusedLocationProviderClient</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+<span class="s4">//        getCurrentLocation();</span>
+        <span class="s1">setupLocationCallback</span><span class="s2">();</span>
+        <span class="s1">Floating</span><span class="s2">();</span>
+        <span class="s1">checkLocationPermission</span><span class="s2">();</span>
+        <span class="s1">checkNotificationPermission</span><span class="s2">();</span>
+
+        <span class="s1">userRecyclerView </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">userRecyclerView</span><span class="s2">);</span>
+        <span class="s1">userRecyclerView</span><span class="s2">.</span><span class="s1">setLayoutManager</span><span class="s2">(</span><span class="s0">new </span><span class="s1">LinearLayoutManager</span><span class="s2">(</span><span class="s0">this</span><span class="s2">));</span>
+
+        <span class="s1">userAdapter </span><span class="s2">= </span><span class="s0">new </span><span class="s1">UserAdapter</span><span class="s2">(</span><span class="s1">userList</span><span class="s2">, </span><span class="s1">user -&gt; </span><span class="s2">{</span>
+            <span class="s1">Marker marker </span><span class="s2">= </span><span class="s1">markerMap</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">mMap </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+
+                <span class="s1">LatLng location </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LatLng</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">(), </span><span class="s1">user</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">addMarker</span><span class="s2">(</span><span class="s0">new </span><span class="s1">MarkerOptions</span><span class="s2">().</span><span class="s1">position</span><span class="s2">(</span><span class="s1">location</span><span class="s2">).</span><span class="s1">title</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">()));</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">animateCamera</span><span class="s2">(</span><span class="s1">CameraUpdateFactory</span><span class="s2">.</span><span class="s1">newLatLngZoom</span><span class="s2">(</span><span class="s1">location</span><span class="s2">, </span><span class="s3">15.5f</span><span class="s2">));</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">userRecyclerView</span><span class="s2">.</span><span class="s1">setAdapter</span><span class="s2">(</span><span class="s1">userAdapter</span><span class="s2">);</span>
+
+    <span class="s2">}</span>
+
+<span class="s4">//    private void userStatus() {</span>
+<span class="s4">//        String userID = mAuth.getCurrentUser().getUid();</span>
+<span class="s4">//        DatabaseReference userStatusReference = FirebaseDatabase.getInstance().getReference(&quot;user&quot;).child(userID).child(&quot;online&quot;);</span>
+<span class="s4">//        userStatusReference.setValue(true);</span>
+<span class="s4">//        userStatusReference.onDisconnect().setValue(false);</span>
+<span class="s4">//    }</span>
+
+    <span class="s0">private void </span><span class="s1">userStatus</span><span class="s2">() {</span>
+        <span class="s1">String userID </span><span class="s2">= </span><span class="s1">mAuth</span><span class="s2">.</span><span class="s1">getCurrentUser</span><span class="s2">().</span><span class="s1">getUid</span><span class="s2">();</span>
+        <span class="s1">DatabaseReference userStatusReference </span><span class="s2">= </span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">getReference</span><span class="s2">(</span><span class="s5">&quot;user&quot;</span><span class="s2">).</span><span class="s1">child</span><span class="s2">(</span><span class="s1">userID</span><span class="s2">).</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;online&quot;</span><span class="s2">);</span>
+        <span class="s1">DatabaseReference connectedRef </span><span class="s2">= </span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">getReference</span><span class="s2">(</span><span class="s5">&quot;.info/connected&quot;</span><span class="s2">);</span>
+
+        <span class="s1">connectedRef</span><span class="s2">.</span><span class="s1">addValueEventListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ValueEventListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDataChange</span><span class="s2">(</span><span class="s1">@NonNull DataSnapshot snapshot</span><span class="s2">) {</span>
+                <span class="s1">Boolean connected </span><span class="s2">= </span><span class="s1">snapshot</span><span class="s2">.</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Boolean</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">Boolean</span><span class="s2">.</span><span class="s1">TRUE</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">connected</span><span class="s2">)) {</span>
+                    <span class="s1">userStatusReference</span><span class="s2">.</span><span class="s1">setValue</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+                    <span class="s1">userStatusReference</span><span class="s2">.</span><span class="s1">onDisconnect</span><span class="s2">().</span><span class="s1">setValue</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onCancelled</span><span class="s2">(</span><span class="s1">@NonNull DatabaseError error</span><span class="s2">) {</span>
+                <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s5">&quot;userStatus&quot;</span><span class="s2">, </span><span class="s5">&quot;onDisconnect listener failed: &quot; </span><span class="s2">+ </span><span class="s1">error</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">loadUsers</span><span class="s2">() {</span>
+        <span class="s1">DatabaseReference ref </span><span class="s2">= </span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">getReference</span><span class="s2">(</span><span class="s5">&quot;user&quot;</span><span class="s2">);</span>
+
+        <span class="s1">ref</span><span class="s2">.</span><span class="s1">addValueEventListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ValueEventListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDataChange</span><span class="s2">(</span><span class="s1">@NonNull DataSnapshot snapshot</span><span class="s2">) {</span>
+                <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">User</span><span class="s2">&gt; </span><span class="s1">newList </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+                <span class="s1">markerMap</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+
+                <span class="s0">for </span><span class="s2">(</span><span class="s1">DataSnapshot userSnapshot </span><span class="s2">: </span><span class="s1">snapshot</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">()) {</span>
+                    <span class="s1">String name </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;name&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                    <span class="s1">Double lat </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;latitude&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Double</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                    <span class="s1">Double lng </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;longitude&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Double</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                    <span class="s0">boolean </span><span class="s1">online </span><span class="s2">= </span><span class="s1">Boolean</span><span class="s2">.</span><span class="s1">TRUE</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;online&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Boolean</span><span class="s2">.</span><span class="s0">class</span><span class="s2">));</span>
+                    <span class="s1">String userID </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">();</span>
+
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">name </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">lat </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">lng </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+
+<span class="s4">//                    LatLng location = new LatLng(lat, lng);</span>
+<span class="s4">//                    Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(name));</span>
+<span class="s4">//</span>
+<span class="s4">//                    if (marker != null) {</span>
+<span class="s4">//                        markerMap.put(name, marker);</span>
+<span class="s4">//                        fabOpen = loadAnimation(MainActivity.this, R.anim.fab_open);</span>
+<span class="s4">//                    }</span>
+
+                    <span class="s1">newList</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">User</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s1">lat</span><span class="s2">, </span><span class="s1">lng</span><span class="s2">, </span><span class="s1">online</span><span class="s2">));</span>
+                    <span class="s1">Log</span><span class="s2">.</span><span class="s1">d</span><span class="s2">(</span><span class="s5">&quot;FirebaseData&quot;</span><span class="s2">, </span><span class="s5">&quot;User: &quot; </span><span class="s2">+ </span><span class="s1">name</span><span class="s2">);  </span><span class="s4">// 🟢 Debugging ke liye</span>
+                        <span class="s2">}</span>
+                <span class="s2">}</span>
+
+                <span class="s1">userAdapter</span><span class="s2">.</span><span class="s1">updateList</span><span class="s2">(</span><span class="s1">newList</span><span class="s2">);  </span><span class="s4">// 🟢 List ko update karo</span>
+            <span class="s2">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onCancelled</span><span class="s2">(</span><span class="s1">@NonNull DatabaseError error</span><span class="s2">) {</span>
+                <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s5">&quot;FirebaseError&quot;</span><span class="s2">, </span><span class="s5">&quot;Database error: &quot; </span><span class="s2">+ </span><span class="s1">error</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">checkLocationSettings</span><span class="s2">() {</span>
+        <span class="s1">LocationRequest locationRequest </span><span class="s2">= </span><span class="s1">LocationRequest</span><span class="s2">.</span><span class="s1">create</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">setPriority</span><span class="s2">(</span><span class="s1">LocationRequest</span><span class="s2">.</span><span class="s1">PRIORITY_HIGH_ACCURACY</span><span class="s2">);</span>
+
+        <span class="s1">LocationSettingsRequest</span><span class="s2">.</span><span class="s1">Builder builder </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LocationSettingsRequest</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">addLocationRequest</span><span class="s2">(</span><span class="s1">locationRequest</span><span class="s2">);</span>
+
+        <span class="s1">SettingsClient settingsClient </span><span class="s2">= </span><span class="s1">LocationServices</span><span class="s2">.</span><span class="s1">getSettingsClient</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">Task</span><span class="s2">&lt;</span><span class="s1">LocationSettingsResponse</span><span class="s2">&gt; </span><span class="s1">task </span><span class="s2">= </span><span class="s1">settingsClient</span><span class="s2">.</span><span class="s1">checkLocationSettings</span><span class="s2">(</span><span class="s1">builder</span><span class="s2">.</span><span class="s1">build</span><span class="s2">());</span>
+
+        <span class="s1">task</span><span class="s2">.</span><span class="s1">addOnSuccessListener</span><span class="s2">(</span><span class="s1">locationSettingsResponse -&gt; </span><span class="s2">{</span>
+            <span class="s4">// GPS is ON, start location updates</span>
+            <span class="s1">startLocationUpdates</span><span class="s2">();</span>
+        <span class="s2">});</span>
+
+        <span class="s1">task</span><span class="s2">.</span><span class="s1">addOnFailureListener</span><span class="s2">(</span><span class="s1">e -&gt; </span><span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">e </span><span class="s0">instanceof </span><span class="s1">ResolvableApiException</span><span class="s2">) {</span>
+                <span class="s0">try </span><span class="s2">{</span>
+                    <span class="s4">// Ask user to enable GPS</span>
+                    <span class="s1">ResolvableApiException resolvable </span><span class="s2">= (</span><span class="s1">ResolvableApiException</span><span class="s2">) </span><span class="s1">e</span><span class="s2">;</span>
+                    <span class="s1">resolvable</span><span class="s2">.</span><span class="s1">startResolutionForResult</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">REQUEST_CHECK_SETTINGS</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IntentSender</span><span class="s2">.</span><span class="s1">SendIntentException ignored</span><span class="s2">) {</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onActivityResult</span><span class="s2">(</span><span class="s0">int </span><span class="s1">requestCode</span><span class="s2">, </span><span class="s0">int </span><span class="s1">resultCode</span><span class="s2">, </span><span class="s1">Intent data</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onActivityResult</span><span class="s2">(</span><span class="s1">requestCode</span><span class="s2">, </span><span class="s1">resultCode</span><span class="s2">, </span><span class="s1">data</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">requestCode </span><span class="s2">== </span><span class="s1">REQUEST_CHECK_SETTINGS</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">resultCode </span><span class="s2">== </span><span class="s1">RESULT_OK</span><span class="s2">) {</span>
+                <span class="s4">// User enabled GPS, start location updates</span>
+                <span class="s1">startLocationUpdates</span><span class="s2">();</span>
+                <span class="s0">new </span><span class="s1">Handler</span><span class="s2">(</span><span class="s1">Looper</span><span class="s2">.</span><span class="s1">getMainLooper</span><span class="s2">()).</span><span class="s1">postDelayed</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Runnable</span><span class="s2">() {</span>
+                    <span class="s1">@Override</span>
+                    <span class="s0">public void </span><span class="s1">run</span><span class="s2">() {</span>
+                        <span class="s1">getCurrentLocation</span><span class="s2">();</span>
+                    <span class="s2">}</span>
+                <span class="s2">}, </span><span class="s3">5000</span><span class="s2">); </span><span class="s4">// ⏱ 5000 milliseconds = 5 seconds ka delay</span>
+
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">checkLocationPermission</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED </span><span class="s2">&amp;&amp; </span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_COARSE_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+            <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">requestPermissions</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_COARSE_LOCATION</span><span class="s2">}, </span><span class="s1">FINE_LOCATION_PERMISSION_REQUEST_CODE</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">getCurrentLocation</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION</span><span class="s2">.</span><span class="s1">SDK_INT </span><span class="s2">&gt;= </span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION_CODES</span><span class="s2">.</span><span class="s1">Q</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_BACKGROUND_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+                <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">requestPermissions</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_BACKGROUND_LOCATION</span><span class="s2">}, </span><span class="s1">BACKGROUND_LOCATION_PERMISSION_REQUEST_CODE</span><span class="s2">);</span>
+                <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Location permission denied. Please allow! All Time Location&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_LONG</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">checkNotificationPermission</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION</span><span class="s2">.</span><span class="s1">SDK_INT </span><span class="s2">&gt;= </span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION_CODES</span><span class="s2">.</span><span class="s1">TIRAMISU</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">ContextCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">POST_NOTIFICATIONS</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+                <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">requestPermissions</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">POST_NOTIFICATIONS</span><span class="s2">}, </span><span class="s1">NOTIFICATION_PERMISSION_REQUEST_CODE</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">setupLocationCallback</span><span class="s2">() {</span>
+        <span class="s1">locationCallback </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LocationCallback</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onLocationResult</span><span class="s2">(</span><span class="s1">@NonNull LocationResult locationResult</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">locationResult </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) </span><span class="s0">return</span><span class="s2">;</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s1">Location location </span><span class="s2">: </span><span class="s1">locationResult</span><span class="s2">.</span><span class="s1">getLocations</span><span class="s2">()) {</span>
+                    <span class="s1">currentLocation </span><span class="s2">= </span><span class="s1">location</span><span class="s2">;</span>
+<span class="s4">//                    updateMap(currentLocation);</span>
+                    <span class="s1">Log</span><span class="s2">.</span><span class="s1">i</span><span class="s2">(</span><span class="s5">&quot;LocationUpdate&quot;</span><span class="s2">, </span><span class="s5">&quot;Latitude: &quot; </span><span class="s2">+ </span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">() + </span><span class="s5">&quot;, Longitude: &quot; </span><span class="s2">+ </span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">};</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">getCurrentLocation</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">android</span><span class="s2">.</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">)</span>
+                <span class="s2">!= </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED </span><span class="s2">&amp;&amp; </span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">android</span><span class="s2">.</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_COARSE_LOCATION</span><span class="s2">)</span>
+                <span class="s2">!= </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+            <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">requestPermissions</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">android</span><span class="s2">.</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">}, </span><span class="s1">FINE_LOCATION_PERMISSION_REQUEST_CODE</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s1">fusedLocationProviderClient </span><span class="s2">= </span><span class="s1">LocationServices</span><span class="s2">.</span><span class="s1">getFusedLocationProviderClient</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">Task</span><span class="s2">&lt;</span><span class="s1">Location</span><span class="s2">&gt; </span><span class="s1">task </span><span class="s2">= </span><span class="s1">fusedLocationProviderClient</span><span class="s2">.</span><span class="s1">getLastLocation</span><span class="s2">();</span>
+        <span class="s1">task</span><span class="s2">.</span><span class="s1">addOnSuccessListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">OnSuccessListener</span><span class="s2">&lt;</span><span class="s1">Location</span><span class="s2">&gt;() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onSuccess</span><span class="s2">(</span><span class="s1">Location location</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">location </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                    <span class="s1">currentLocation </span><span class="s2">= </span><span class="s1">location</span><span class="s2">;</span>
+                    <span class="s1">SupportMapFragment mapFragment </span><span class="s2">= (</span><span class="s1">SupportMapFragment</span><span class="s2">) </span><span class="s1">getSupportFragmentManager</span><span class="s2">().</span><span class="s1">findFragmentById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">fragment</span><span class="s2">);</span>
+                    <span class="s1">mapFragment</span><span class="s2">.</span><span class="s1">getMapAsync</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">);</span>
+
+                    <span class="s1">String userID </span><span class="s2">= </span><span class="s1">mAuth</span><span class="s2">.</span><span class="s1">getCurrentUser</span><span class="s2">().</span><span class="s1">getUid</span><span class="s2">();</span>
+                    <span class="s1">databaseReference </span><span class="s2">= </span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">getReference</span><span class="s2">(</span><span class="s5">&quot;user&quot;</span><span class="s2">).</span><span class="s1">child</span><span class="s2">(</span><span class="s1">userID</span><span class="s2">);</span>
+                    <span class="s1">databaseReference</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;latitude&quot;</span><span class="s2">).</span><span class="s1">setValue</span><span class="s2">(</span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">());</span>
+                    <span class="s1">databaseReference</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;longitude&quot;</span><span class="s2">).</span><span class="s1">setValue</span><span class="s2">(</span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+
+                    <span class="s1">Log</span><span class="s2">.</span><span class="s1">i</span><span class="s2">(</span><span class="s5">&quot;XOXO&quot;</span><span class="s2">, </span><span class="s5">&quot;Location: &quot; </span><span class="s2">+ </span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">() + </span><span class="s5">&quot; &quot; </span><span class="s2">+ </span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+<span class="s4">//    private void getCurrentLocation() {</span>
+<span class="s4">//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {</span>
+<span class="s4">//            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -&gt; {</span>
+<span class="s4">//                if (location != null) {</span>
+<span class="s4">//                    currentLocation = location;</span>
+<span class="s4">//                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);</span>
+<span class="s4">//                    mapFragment.getMapAsync(MainActivity.this);</span>
+<span class="s4">//                }</span>
+<span class="s4">//            });</span>
+<span class="s4">//        } else {</span>
+<span class="s4">//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);</span>
+<span class="s4">//        }</span>
+<span class="s4">//    }</span>
+
+    <span class="s0">public void </span><span class="s1">startLocationUpdates</span><span class="s2">() {</span>
+        <span class="s1">LocationRequest locationRequest </span><span class="s2">= </span><span class="s1">LocationRequest</span><span class="s2">.</span><span class="s1">create</span><span class="s2">();</span>
+        <span class="s1">locationRequest</span><span class="s2">.</span><span class="s1">setInterval</span><span class="s2">(</span><span class="s3">10000</span><span class="s2">); </span><span class="s4">// Update every 10 seconds</span>
+        <span class="s1">locationRequest</span><span class="s2">.</span><span class="s1">setFastestInterval</span><span class="s2">(</span><span class="s3">2000</span><span class="s2">); </span><span class="s4">// Fastest update interval</span>
+        <span class="s1">locationRequest</span><span class="s2">.</span><span class="s1">setPriority</span><span class="s2">(</span><span class="s1">LocationRequest</span><span class="s2">.</span><span class="s1">PRIORITY_HIGH_ACCURACY</span><span class="s2">); </span><span class="s4">// Use highest accuracy</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">) == </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+            <span class="s1">fusedLocationProviderClient</span><span class="s2">.</span><span class="s1">requestLocationUpdates</span><span class="s2">(</span><span class="s1">locationRequest</span><span class="s2">, </span><span class="s1">locationCallback</span><span class="s2">, </span><span class="s1">Looper</span><span class="s2">.</span><span class="s1">getMainLooper</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">updateMap</span><span class="s2">(</span><span class="s1">Location location</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">mMap </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s1">LatLng currentLatLng </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LatLng</span><span class="s2">(</span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">(), </span><span class="s1">location</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+            <span class="s1">mMap</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+            <span class="s1">mMap</span><span class="s2">.</span><span class="s1">addMarker</span><span class="s2">((</span><span class="s0">new </span><span class="s1">MarkerOptions</span><span class="s2">()).</span><span class="s1">position</span><span class="s2">(</span><span class="s1">currentLatLng</span><span class="s2">).</span><span class="s1">title</span><span class="s2">(</span><span class="s5">&quot;Current Location&quot;</span><span class="s2">));</span>
+<span class="s4">//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15.5f));</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onMapReady</span><span class="s2">(</span><span class="s1">@NonNull GoogleMap googleMap</span><span class="s2">) {</span>
+        <span class="s1">mMap </span><span class="s2">= </span><span class="s1">googleMap</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED </span><span class="s2">&amp;&amp;</span>
+                <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_COARSE_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+            <span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">requestPermissions</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">}, </span><span class="s1">FINE_LOCATION_PERMISSION_REQUEST_CODE</span><span class="s2">);</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMyLocationEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setMyLocationButtonEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setZoomControlsEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setCompassEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setTiltGesturesEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setRotateGesturesEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setScrollGesturesEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setZoomGesturesEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">getUiSettings</span><span class="s2">().</span><span class="s1">setZoomControlsEnabled</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+
+        <span class="s1">loadUsers</span><span class="s2">();</span>
+        <span class="s1">userStatus</span><span class="s2">();</span>
+
+        <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Map is Ready&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+        <span class="s1">LatLng sydney </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LatLng</span><span class="s2">(</span><span class="s1">currentLocation</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">(), </span><span class="s1">currentLocation</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">());</span>
+<span class="s4">//        mMap.addMarker(new MarkerOptions().position(sydney).title(&quot;Current Location&quot;));</span>
+<span class="s4">//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));</span>
+        <span class="s1">mMap</span><span class="s2">.</span><span class="s1">animateCamera</span><span class="s2">(</span><span class="s1">CameraUpdateFactory</span><span class="s2">.</span><span class="s1">newLatLngZoom</span><span class="s2">(</span><span class="s1">sydney</span><span class="s2">, </span><span class="s3">15.5f</span><span class="s2">));</span>
+
+        <span class="s1">Log</span><span class="s2">.</span><span class="s1">d</span><span class="s2">(</span><span class="s5">&quot;Intros&quot;</span><span class="s2">,</span><span class="s5">&quot;Introx_Location   &quot; </span><span class="s2">+ </span><span class="s5">&quot;Longitude: &quot; </span><span class="s2">+</span><span class="s1">currentLocation</span><span class="s2">.</span><span class="s1">getLongitude</span><span class="s2">()+ </span><span class="s5">&quot;   &quot; </span><span class="s2">+ </span><span class="s5">&quot;Latitude: &quot; </span><span class="s2">+ </span><span class="s1">currentLocation</span><span class="s2">.</span><span class="s1">getLatitude</span><span class="s2">());</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onStart</span><span class="s2">();</span>
+        <span class="s1">startLocationUpdates</span><span class="s2">();</span>
+        <span class="s1">getCurrentLocation</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStop</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onStop</span><span class="s2">();</span>
+        <span class="s1">fusedLocationProviderClient</span><span class="s2">.</span><span class="s1">removeLocationUpdates</span><span class="s2">(</span><span class="s1">locationCallback</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onResume</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onResume</span><span class="s2">();</span>
+        <span class="s1">startLocationUpdates</span><span class="s2">();</span>
+<span class="s4">//        getCurrentLocation();</span>
+        <span class="s1">userStatus</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onPause</span><span class="s2">() {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onPause</span><span class="s2">();</span>
+        <span class="s1">fusedLocationProviderClient</span><span class="s2">.</span><span class="s1">removeLocationUpdates</span><span class="s2">(</span><span class="s1">locationCallback</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private </span><span class="s1">MenuItem refreshItem</span><span class="s2">;</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu</span><span class="s2">(</span><span class="s1">Menu menu</span><span class="s2">) {</span>
+        <span class="s1">MenuInflater inflater </span><span class="s2">= </span><span class="s1">getMenuInflater</span><span class="s2">();</span>
+        <span class="s1">inflater</span><span class="s2">.</span><span class="s1">inflate</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">menu</span><span class="s2">.</span><span class="s1">main_menu</span><span class="s2">, </span><span class="s1">menu</span><span class="s2">);</span>
+        <span class="s1">refreshItem </span><span class="s2">= </span><span class="s1">menu</span><span class="s2">.</span><span class="s1">findItem</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">refresh</span><span class="s2">);</span>
+        <span class="s0">return true</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s4">//    Menu function set</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onOptionsItemSelected</span><span class="s2">(</span><span class="s1">@NonNull MenuItem item</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">item</span><span class="s2">.</span><span class="s1">getItemId</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">startSharingLocation</span><span class="s2">) {</span>
+            <span class="s1">requestForegroundServicePermission</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">stopSharingLocation</span><span class="s2">) {</span>
+            <span class="s1">stopLocationSharing</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">satelliteMenu</span><span class="s2">) {</span>
+            <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMapType</span><span class="s2">(</span><span class="s1">GoogleMap</span><span class="s2">.</span><span class="s1">MAP_TYPE_SATELLITE</span><span class="s2">);</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">refresh</span><span class="s2">) {</span>
+            <span class="s1">startRefreshAnimation</span><span class="s2">();</span>
+            <span class="s1">getCurrentLocation</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">adminLogin</span><span class="s2">) {</span>
+            <span class="s1">adminLogin</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">id</span><span class="s2">==</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">signOut</span><span class="s2">) {</span>
+            <span class="s1">userSignOut</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">return super</span><span class="s2">.</span><span class="s1">onOptionsItemSelected</span><span class="s2">(</span><span class="s1">item</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">isListVisible </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+    <span class="s0">private void </span><span class="s1">toggleList</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">isListVisible</span><span class="s2">) {</span>
+            <span class="s1">userRecyclerView</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">GONE</span><span class="s2">);</span>
+            <span class="s1">isListVisible </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">userRecyclerView</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span><span class="s2">);</span>
+            <span class="s1">isListVisible </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">startRefreshAnimation</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">refreshItem </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s4">// Set Custom Animation on Menu Icon</span>
+            <span class="s1">ImageView refreshIcon </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ImageView</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+            <span class="s1">refreshIcon</span><span class="s2">.</span><span class="s1">setImageDrawable</span><span class="s2">(</span><span class="s1">refreshItem</span><span class="s2">.</span><span class="s1">getIcon</span><span class="s2">());</span>
+
+            <span class="s1">Animation rotateAnim </span><span class="s2">= </span><span class="s1">loadAnimation</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">R</span><span class="s2">.</span><span class="s1">anim</span><span class="s2">.</span><span class="s1">rotate_refresh</span><span class="s2">);</span>
+            <span class="s1">refreshIcon</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">rotateAnim</span><span class="s2">);</span>
+
+            <span class="s1">refreshItem</span><span class="s2">.</span><span class="s1">setActionView</span><span class="s2">(</span><span class="s1">refreshIcon</span><span class="s2">);</span>
+
+            <span class="s4">// Reset Icon after Animation</span>
+            <span class="s1">refreshIcon</span><span class="s2">.</span><span class="s1">postDelayed</span><span class="s2">(() </span><span class="s1">-&gt; refreshItem</span><span class="s2">.</span><span class="s1">setActionView</span><span class="s2">(</span><span class="s0">null</span><span class="s2">), </span><span class="s3">1100</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static final int </span><span class="s1">FOREGROUND_SERVICE_PERMISSION_CODE </span><span class="s2">= </span><span class="s3">101</span><span class="s2">;</span>
+
+    <span class="s0">private void </span><span class="s1">requestForegroundServicePermission</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION</span><span class="s2">.</span><span class="s1">SDK_INT </span><span class="s2">&gt;= </span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION_CODES</span><span class="s2">.</span><span class="s1">UPSIDE_DOWN_CAKE</span><span class="s2">) { </span><span class="s4">// API 34 (Android 14)</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">FOREGROUND_SERVICE_LOCATION</span><span class="s2">) != </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+                <span class="s1">requestPermissions</span><span class="s2">(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">FOREGROUND_SERVICE_LOCATION</span><span class="s2">}, </span><span class="s1">FOREGROUND_SERVICE_PERMISSION_CODE</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">startLocationSharing</span><span class="s2">(); </span><span class="s4">// Agar permission already mili hui hai</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">startLocationSharing</span><span class="s2">(); </span><span class="s4">// Android 14 se niche ke versions me permission runtime par nahi chahiye</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">startLocationSharing</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">checkSelfPermission</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_BACKGROUND_LOCATION</span><span class="s2">) == </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+            <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">LocationWorker</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+<span class="s4">//            startService(intent);</span>
+<span class="s4">//            Toast.makeText(MainActivity.this, &quot;Location sharing started&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="s4">//        } else {</span>
+<span class="s4">//            Toast.makeText(MainActivity.this, &quot;Location sharing not started&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="s4">//            showSettingsDialog();</span>
+<span class="s4">//        }</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION</span><span class="s2">.</span><span class="s1">SDK_INT </span><span class="s2">&gt;= </span><span class="s1">Build</span><span class="s2">.</span><span class="s1">VERSION_CODES</span><span class="s2">.</span><span class="s1">O</span><span class="s2">) {</span>
+                <span class="s1">startForegroundService</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">); </span><span class="s4">// ✅ This is key</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">startService</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+            <span class="s2">}</span>
+
+            <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Location sharing started&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Location sharing not started&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+            <span class="s1">showSettingsDialog</span><span class="s2">(); </span><span class="s4">// Ask user to enable permission</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">stopLocationSharing</span><span class="s2">() {</span>
+        <span class="s1">Intent stopIntent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s5">&quot;STOP_SERVICE&quot;</span><span class="s2">);</span>
+        <span class="s1">sendBroadcast</span><span class="s2">(</span><span class="s1">stopIntent</span><span class="s2">);</span>
+        <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Location sharing stopped&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">userSignOut</span><span class="s2">() {</span>
+        <span class="s1">FirebaseAuth</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">signOut</span><span class="s2">();</span>
+        <span class="s1">stopLocationSharing</span><span class="s2">();</span>
+        <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">login</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+        <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+        <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;SigOut Successful..&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+        <span class="s1">finish</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">Floating</span><span class="s2">() {</span>
+        <span class="s1">FloatingActionButton fab_terrain </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">terrain</span><span class="s2">);</span>
+        <span class="s1">FloatingActionButton fab_hybrid </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">hybrid</span><span class="s2">);</span>
+        <span class="s1">fab </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">mode</span><span class="s2">);</span>
+        <span class="s1">fab1 </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">satelliteMode</span><span class="s2">);</span>
+        <span class="s1">fab2 </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">NormalMode</span><span class="s2">);</span>
+        <span class="s1">fabOpen </span><span class="s2">= </span><span class="s1">loadAnimation</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">R</span><span class="s2">.</span><span class="s1">anim</span><span class="s2">.</span><span class="s1">fab_open</span><span class="s2">);</span>
+        <span class="s1">fabClose </span><span class="s2">= </span><span class="s1">loadAnimation</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">R</span><span class="s2">.</span><span class="s1">anim</span><span class="s2">.</span><span class="s1">fab_close</span><span class="s2">);</span>
+
+        <span class="s4">// Visibility Set Invisible</span>
+        <span class="s1">fab1</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+        <span class="s1">fab2</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+        <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+        <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+
+        <span class="s4">// floating button click visibility event</span>
+        <span class="s1">fab</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">fab1</span><span class="s2">.</span><span class="s1">getVisibility</span><span class="s2">() == </span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">) {</span>
+                    <span class="s1">fab1</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab2</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab1</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabOpen</span><span class="s2">);</span>
+                    <span class="s1">fab2</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabOpen</span><span class="s2">);</span>
+                    <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabOpen</span><span class="s2">);</span>
+                    <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabOpen</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">fab1</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab2</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">setVisibility</span><span class="s2">(</span><span class="s1">View</span><span class="s2">.</span><span class="s1">INVISIBLE</span><span class="s2">);</span>
+                    <span class="s1">fab1</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabClose</span><span class="s2">);</span>
+                    <span class="s1">fab2</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabClose</span><span class="s2">);</span>
+                    <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabClose</span><span class="s2">);</span>
+                    <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">startAnimation</span><span class="s2">(</span><span class="s1">fabClose</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s4">// floating button click event for satellite</span>
+        <span class="s1">fab1</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMapType</span><span class="s2">(</span><span class="s1">GoogleMap</span><span class="s2">.</span><span class="s1">MAP_TYPE_SATELLITE</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+        <span class="s4">// floating button click event for normal</span>
+<span class="s4">//        fab2.setOnClickListener(new View.OnClickListener() {</span>
+<span class="s4">//            @Override</span>
+<span class="s4">//            public void onClick(View v) {</span>
+<span class="s4">//                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);</span>
+<span class="s4">//            }</span>
+<span class="s4">//        });</span>
+        <span class="s1">fab2</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s1">v -&gt; </span><span class="s2">{</span>
+            <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMapType</span><span class="s2">(</span><span class="s1">GoogleMap</span><span class="s2">.</span><span class="s1">MAP_TYPE_NORMAL</span><span class="s2">);</span>
+        <span class="s2">});</span>
+        <span class="s4">// floating button click event for terrain</span>
+        <span class="s1">fab_terrain</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMapType</span><span class="s2">(</span><span class="s1">GoogleMap</span><span class="s2">.</span><span class="s1">MAP_TYPE_TERRAIN</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+        <span class="s4">// floating button click event for hybrid</span>
+        <span class="s1">fab_hybrid</span><span class="s2">.</span><span class="s1">setOnClickListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">View</span><span class="s2">.</span><span class="s1">OnClickListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick</span><span class="s2">(</span><span class="s1">View v</span><span class="s2">) {</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">setMapType</span><span class="s2">(</span><span class="s1">GoogleMap</span><span class="s2">.</span><span class="s1">MAP_TYPE_HYBRID</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s4">//    check device location permission allowed or not.</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onRequestPermissionsResult</span><span class="s2">(</span><span class="s0">int </span><span class="s1">requestCode</span><span class="s2">, </span><span class="s1">@NonNull String</span><span class="s2">[] </span><span class="s1">permissions</span><span class="s2">, </span><span class="s1">@NonNull </span><span class="s0">int</span><span class="s2">[] </span><span class="s1">grantResults</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onRequestPermissionsResult</span><span class="s2">(</span><span class="s1">requestCode</span><span class="s2">, </span><span class="s1">permissions</span><span class="s2">, </span><span class="s1">grantResults</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">requestCode </span><span class="s2">== </span><span class="s1">FINE_LOCATION_PERMISSION_REQUEST_CODE </span><span class="s2">|| </span><span class="s1">requestCode </span><span class="s2">== </span><span class="s1">BACKGROUND_LOCATION_PERMISSION_REQUEST_CODE</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">grantResults</span><span class="s2">.</span><span class="s1">length </span><span class="s2">&gt; </span><span class="s3">0 </span><span class="s2">&amp;&amp; </span><span class="s1">grantResults</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] == </span><span class="s1">PackageManager</span><span class="s2">.</span><span class="s1">PERMISSION_GRANTED</span><span class="s2">) {</span>
+                <span class="s1">getCurrentLocation</span><span class="s2">();</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s0">boolean </span><span class="s1">showRationale </span><span class="s2">= </span><span class="s1">ActivityCompat</span><span class="s2">.</span><span class="s1">shouldShowRequestPermissionRationale</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">Manifest</span><span class="s2">.</span><span class="s1">permission</span><span class="s2">.</span><span class="s1">ACCESS_FINE_LOCATION</span><span class="s2">);</span>
+
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">requestCode </span><span class="s2">== </span><span class="s1">FOREGROUND_SERVICE_PERMISSION_CODE</span><span class="s2">) {</span>
+                    <span class="s1">startLocationSharing</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Foreground Service Permission Denied&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+                <span class="s2">}</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">showRationale</span><span class="s2">) {</span>
+                    <span class="s4">// 🚨  &quot;Don't Ask Again&quot; select kiya hai</span>
+                    <span class="s1">showSettingsDialog</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Location permission denied. Please allow!&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+                    <span class="s1">checkLocationPermission</span><span class="s2">();</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+    <span class="s0">private void </span><span class="s1">showSettingsDialog</span><span class="s2">() {</span>
+        <span class="s1">AlertDialog</span><span class="s2">.</span><span class="s1">Builder builder </span><span class="s2">= </span><span class="s0">new </span><span class="s1">AlertDialog</span><span class="s2">.</span><span class="s1">Builder</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s5">&quot;Need Location Permission&quot;</span><span class="s2">);</span>
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setMessage</span><span class="s2">(</span><span class="s5">&quot;This app needs location permission to work. Enable it in Settings. Please Allow All time Location&quot;</span><span class="s2">);</span>
+
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setPositiveButton</span><span class="s2">(</span><span class="s5">&quot;Go to Settings&quot;</span><span class="s2">, (</span><span class="s1">dialog</span><span class="s2">, </span><span class="s1">which</span><span class="s2">) </span><span class="s1">-&gt; </span><span class="s2">{</span>
+            <span class="s1">dialog</span><span class="s2">.</span><span class="s1">dismiss</span><span class="s2">();</span>
+            <span class="s1">Intent intent </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Intent</span><span class="s2">(</span><span class="s1">Settings</span><span class="s2">.</span><span class="s1">ACTION_APPLICATION_DETAILS_SETTINGS</span><span class="s2">);</span>
+            <span class="s1">Uri uri </span><span class="s2">= </span><span class="s1">Uri</span><span class="s2">.</span><span class="s1">fromParts</span><span class="s2">(</span><span class="s5">&quot;package&quot;</span><span class="s2">, </span><span class="s1">getPackageName</span><span class="s2">(), </span><span class="s0">null</span><span class="s2">);</span>
+            <span class="s1">intent</span><span class="s2">.</span><span class="s1">setData</span><span class="s2">(</span><span class="s1">uri</span><span class="s2">);</span>
+            <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">);</span>
+        <span class="s2">});</span>
+
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">setNegativeButton</span><span class="s2">(</span><span class="s5">&quot;Cancel&quot;</span><span class="s2">, (</span><span class="s1">dialog</span><span class="s2">, </span><span class="s1">which</span><span class="s2">) </span><span class="s1">-&gt; dialog</span><span class="s2">.</span><span class="s1">dismiss</span><span class="s2">());</span>
+
+        <span class="s1">builder</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">adminLogin</span><span class="s2">() {</span>
+        <span class="s1">DatabaseReference ref </span><span class="s2">= </span><span class="s1">FirebaseDatabase</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">().</span><span class="s1">getReference</span><span class="s2">(</span><span class="s5">&quot;user&quot;</span><span class="s2">);</span>
+        <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s5">&quot;Admin login Successful&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+
+        <span class="s1">ref</span><span class="s2">.</span><span class="s1">addValueEventListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ValueEventListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDataChange</span><span class="s2">(</span><span class="s1">@NonNull DataSnapshot snapshot</span><span class="s2">) {</span>
+                <span class="s1">mMap</span><span class="s2">.</span><span class="s1">clear</span><span class="s2">();</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s1">DataSnapshot userSnapshot </span><span class="s2">: </span><span class="s1">snapshot</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">()) {</span>
+                    <span class="s1">String name </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;name&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                    <span class="s0">double </span><span class="s1">lat </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;latitude&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Double</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+                    <span class="s0">double </span><span class="s1">lng </span><span class="s2">= </span><span class="s1">userSnapshot</span><span class="s2">.</span><span class="s1">child</span><span class="s2">(</span><span class="s5">&quot;longitude&quot;</span><span class="s2">).</span><span class="s1">getValue</span><span class="s2">(</span><span class="s1">Double</span><span class="s2">.</span><span class="s0">class</span><span class="s2">);</span>
+
+                    <span class="s1">LatLng location </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LatLng</span><span class="s2">(</span><span class="s1">lat</span><span class="s2">, </span><span class="s1">lng</span><span class="s2">);</span>
+                    <span class="s1">mMap</span><span class="s2">.</span><span class="s1">addMarker</span><span class="s2">(</span><span class="s0">new </span><span class="s1">MarkerOptions</span><span class="s2">().</span><span class="s1">position</span><span class="s2">(</span><span class="s1">location</span><span class="s2">).</span><span class="s1">title</span><span class="s2">(</span><span class="s1">name</span><span class="s2">)).</span><span class="s1">showInfoWindow</span><span class="s2">();</span>
+                    <span class="s1">Toast</span><span class="s2">.</span><span class="s1">makeText</span><span class="s2">(</span><span class="s1">MainActivity</span><span class="s2">.</span><span class="s0">this</span><span class="s2">, </span><span class="s1">name </span><span class="s2">+</span><span class="s5">&quot; Location Refresh&quot;</span><span class="s2">, </span><span class="s1">Toast</span><span class="s2">.</span><span class="s1">LENGTH_SHORT</span><span class="s2">).</span><span class="s1">show</span><span class="s2">();</span>
+                    <span class="s1">Log</span><span class="s2">.</span><span class="s1">d</span><span class="s2">(</span><span class="s5">&quot;ADAD&quot;</span><span class="s2">, </span><span class="s5">&quot;Name: &quot; </span><span class="s2">+ </span><span class="s1">name </span><span class="s2">+ </span><span class="s5">&quot;, Latitude: &quot; </span><span class="s2">+ </span><span class="s1">lat </span><span class="s2">+ </span><span class="s5">&quot;, Longitude: &quot; </span><span class="s2">+ </span><span class="s1">lng</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onCancelled</span><span class="s2">(</span><span class="s1">@NonNull DatabaseError error</span><span class="s2">) {</span>
+                <span class="s1">Log</span><span class="s2">.</span><span class="s1">e</span><span class="s2">(</span><span class="s5">&quot;Firebase&quot;</span><span class="s2">, </span><span class="s5">&quot;Error fetching data&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">.</span><span class="s1">toException</span><span class="s2">());</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span></pre>
+</body>
+</html>

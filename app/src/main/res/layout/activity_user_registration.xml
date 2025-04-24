@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".user_Registration"
+    android:gravity="center"
+    android:background="@drawable/login_background"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="Registration"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/registration_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:hint="enter_name"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginTop="25dp"
+            android:padding="12dp"
+            />
+
+        <EditText
+            android:id="@+id/registration_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="email"
+            android:background="@drawable/rounded_corner"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginTop="15dp"
+            android:padding="12dp"
+            />
+
+        <EditText
+            android:id="@+id/registration_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginTop="15dp"
+            android:padding="12dp"
+            />
+
+
+        <TextView
+            android:id="@+id/Login_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/registration_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "740910356275",
+    "firebase_url": "https://introxlocation-default-rtdb.firebaseio.com",
+    "project_id": "introxlocation",
+    "storage_bucket": "introxlocation.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740910356275:android:b97c6084d22ddac8b65046",
+        "android_client_info": {
+          "package_name": "com.example.flex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUGbqQiuoz6HhGWYuZOlRVgYt2sUQq4-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740910356275:android:7fa8013243da9ec3b65046",
+        "android_client_info": {
+          "package_name": "com.example.introx_spy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUGbqQiuoz6HhGWYuZOlRVgYt2sUQq4-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740910356275:android:b7509e14f0822916b65046",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUGbqQiuoz6HhGWYuZOlRVgYt2sUQq4-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
